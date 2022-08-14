@@ -1,0 +1,20 @@
+
+RAID 0 (striping), RAID 1 (replication) operation
+
+Namenode + JobTracker - Master (Ideally 2, in 400 cluster or more it is atleast 4 or 6)
+
+Datanode + Tasktracker - Slave 
+
+
+HDFS daemons - Storage
+NameNode            - Metadata of file, permissions and blocks holding data 
+Secondary NameNode  - Checkpoints primary namenode likely in an hour
+DataNode            - Does processing along with data read write in disk i/o
+
+MapRed daemons - Processing
+JobTracker          - Manages, coordinates, orchestrates
+TaskTracker         - Assigns tasks along with data and creates new JVMs as needed
+
+Local mode                - Only 1 JVM in a single machine and all the daemons run here. Ideal for dev and test data.
+Pseudo - Distributed mode - 1 machine , separate JVMS for each daemon. Dev and to test data and processing. 5 % - 6% subset of data used 
+Fully distributed mode    - Separate nodes for each JVMS. Production. Initially to test use 10% - 15% subset of data   
