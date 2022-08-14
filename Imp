@@ -1,10 +1,19 @@
 
 RAID 0 (striping), RAID 1 (replication) operation
 
+HDFS - Commodity hardware, Open source software. Easy horizontal scale. Close to 4000 node in a cluster.
+
+ClouderaDH distro for linux. HortonWorks Windows support as well. 
+
+Cloudera Manager is an UI. Install packets instead of packages wherever possible.
+
+Data is stored locally in each DataNode and not as a centralized data center.
+
+SPOF NameNode is tackled by multiple NameNodes, Secondary NameNode, Replicating into an NTP server.
+
+NameNode -
 Namenode + JobTracker - Master (Ideally 2, in 400 cluster or more it is atleast 4 or 6)
-
 Datanode + Tasktracker - Slave 
-
 
 HDFS daemons - Storage
 NameNode            - Metadata of file, permissions and blocks holding data 
