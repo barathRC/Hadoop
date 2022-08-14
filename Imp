@@ -28,6 +28,11 @@ Default block size is 64 to 128MB. Default RF is 3 which provides concurrency in
 
 HDFS is write once read many. Doesnt support editing data. You need to delete and recreate the entire file.
 
+If you have 10TB data. 8TB of storage capacity. 
+Available capacity for storage after the consumptions for all the daemons is 20% which is 2TB.
+So, you need to have 2TB x 5-6 nodes.
+
+NAMENODE:-
 Namenode is memory hungry. Needs to have High RAM. SPOF. High end hardware SSDs. 
 NameNode has data in memory and persists in disk as well as fsImage and Editlogs. 
 fsImage - Data at a checkpoint of time. EditLogs - All the changes after the fsImage checkpoin.
@@ -35,8 +40,12 @@ Secondary NameNode intercepts Primary NN in an hourly fashion.
 You lose HDFS if you lose NameNode. SPOF.
 NameNode receives heartbeats ecery 3 seconds from DataNodes. If 10 heartbeats for an DN fails, it is removed from the cluster.
 If the DN is still not responding after 10 minutes the blocks of data are replicated.
+If NameNode restarts , it combines fsImage and EditLogs and by thsi it handles SPOF. Else if P NN fails, another NN takes this task.
 
+DATANODE:-
 Better to have 1TB x 8. DataNodes instead of 2TB x 4 DataNodes 
+Client directly writes to DataNode . nothing gets written into NameNode.
+Checksum time Write is stored near to the block of data. On Read time Checksum this the data is checked against this WriteTime Checksum file. 
 
 Local mode                - Only 1 JVM in a single machine and all the daemons run here. Ideal for dev and test data.
 Pseudo - Distributed mode - 1 machine , separate JVMS for each daemon. Dev and to test data and processing. 5 % - 6% subset of data used 
