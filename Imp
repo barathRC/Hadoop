@@ -73,6 +73,17 @@ JT sends Map and Red tasks to TT. TT the stands up these Map and/or Red tasks.
 MR Task report progress/ complete/ error to TT. TT reports to JT. At this time user sees percentage complete for each tasks in the terminal.
 If errored, then JT spins other MR tasks.
 Once mappers are complete JT signals TT to tell Reducers to run reduce().
+Job is considered finished when the last Map(Map only) or last Reduce(MapRed)  is finished(it signals the parent TT which inturn signals the JT).
+_SUCCESS flag is dropped in the o/p hdfs directory.
+JT signals all TTs to remove the intermedciate data.
+Howwever, log files still persists (JT and tT logs).
+
+SPECULATIVE EXECUTION:-
+If a single map or red task runs significantly abt 20% slower than its peers by default, Hadoop tries to spin up the same task on another node.
+Whichever completes first is "winner". its op is used. Loser is terminated.
+Not recommended for reducers. Turn off soec exec for reducers. By default its on.
+mapred.reduce.tasks.speculative.exrecution in mapred-site.xml.
+
 
 RACK AWARENESS:-
 To enable RA, we must supply NN machine with a script that takes multiple IPS and returms a RACK ID.
