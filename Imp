@@ -62,3 +62,13 @@ Checksum time Write is stored near to the block of data. On Read time Checksum t
 Local mode                - Only 1 JVM in a single machine and all the daemons run here. Ideal for dev and test data.
 Pseudo - Distributed mode - 1 machine , separate JVMS for each daemon. Dev and to test data and processing. 5 % - 6% subset of data used 
 Fully distributed mode    - Separate nodes for each JVMS. Production. Initially to test use 10% - 15% subset of data   
+
+
+AUTHENTICATION & AUTHORIZATION:-
+Authorization is outofthebox but Authentication is not. So, Kerberos for Authentication. Else you can configure a protected isolated network to 
+separately host service like SSH or Bastion to log into the server.
+hdfs PERMISSIONS are linix-like "rwrwrwx" "rw-rw-r" "rw----". Read Write and Browse
+Kerberos is a tickegting sys. Microsoft's LDAP is based on this. Control is by ACL and Bastion.
+HDFS Quota for new users and veteran users each separately. Lock down a hard limit of usable space and num of files and directories.
+Because these directly has a impact in the memory of NameNode. For every space and directory a 200 byte is reserved for the memory by the NameNode.
+To achieve use dfsadmin -[SetQuota|setSpaceQuota] or fs -count -q <directory>
