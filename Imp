@@ -38,9 +38,21 @@ NameNode has data in memory and persists in disk as well as fsImage and Editlogs
 fsImage - Data at a checkpoint of time. EditLogs - All the changes after the fsImage checkpoin.
 Secondary NameNode intercepts Primary NN in an hourly fashion.
 You lose HDFS if you lose NameNode. SPOF.
-NameNode receives heartbeats ecery 3 seconds from DataNodes. If 10 heartbeats for an DN fails, it is removed from the cluster.
+NameNode receives heartbeats every 3 seconds from DataNodes. If 10 heartbeats for an DN fails, it is removed from the cluster.
 If the DN is still not responding after 10 minutes the blocks of data are replicated.
 If NameNode restarts , it combines fsImage and EditLogs and by thsi it handles SPOF. Else if P NN fails, another NN takes this task.
+NN HA:-
+Client request is sent to both the NNs.
+This SPOF is handled by adding a Stand-by NameNode, Quorum Cluster (separate nodes to track the active Namenode and Standby), Zookeeper cluster.
+The Active and Stand-by NN have Quorum Jounra Manager which sends the fsImage and editLogs to Journal Nodes with Epoch number. 
+In case of an active NameNode failure, JounralNodes track the highest Epoch number registered and keeps that details as the active NameNode's details.
+Zookeeper and JournalNodes have odd no. of nodes.
+ZK JVMs in the cluster determines the leader by tracking the data from ZKFC installed in the Namenodes that monitors the NamNodes health.
+Use NN HA only when needed. Most case its not even required.
+NN Federation:-
+You can configure the 2 NN with NN Federation. i.e., NN1 with the path as /prod/ and NN2 with /dev/.
+You have the felxibility to isolate and maintain these separately for each environment.
+
 
 DATANODE:-
 Better to have 1TB x 8. DataNodes instead of 2TB x 4 DataNodes 
