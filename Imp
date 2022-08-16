@@ -73,6 +73,12 @@ JT sends Map and Red tasks to TT. TT the stands up these Map and/or Red tasks.
 MR Task report progress/ complete/ error to TT. TT reports to JT. At this time user sees percentage complete for each tasks in the terminal.
 If errored, then JT spins other MR tasks.
 
+RACK AWARENESS:-
+To enable RA, we must supply NN machine with a script that takes multiple IPS and returms a RACK ID.
+server123: rack1 server555:rack2 (In a mapping file)
+s123-re s555-re (this is embedded in the hostnames).  Try to use this approach as you need to set-up hostnames anyways !!
+Provide core-site.xml with full path of your script using "topology.script.file.name" param
+After this point HDFS becomes rack aware
 
 
 AUTHENTICATION & AUTHORIZATION:-
