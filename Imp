@@ -131,6 +131,12 @@ All worker noes accumulate to counters (safe for multiprocess).
 Counters are often used for job stats to be presented on completion. Better than log messages for diagonizing pblms.
 Hadoop maintains bult in job counters - Total bytes of data read and write. Total num of records processed.
 
+Paritioners - 
+Used in shuffle phase, the partitioner calss determines which partition and reducer a given key/value pair will go to dividing up the key space.
+Default is HashPartitioner which allocates keys evenly to each educer by computing the hash of each key and assigning the key to a keyspace 
+determined by the num of reducers.
+Partitioners can be used to improve performance (if there are many key, value pairs for a particular keyspace and a significant portion of the reducers are
+underworked)
 
 
 SPECULATIVE EXECUTION:-
