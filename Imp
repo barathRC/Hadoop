@@ -94,10 +94,42 @@ Individual mappers cant communicate with each other in any way and hence not awa
 Each mapping task is equivalent and any mapper can process any i/p file.
 
 Shuffle & Sort -
+When mapping phase is complete, the emitted ke,value pairs must be exchanged b/w machines to send all values with the same key toa single reducer. 
+This is the only reqd. communication step in MR.
+
+Shuffle: The intermediary key space is partitioned by key subsets and assigned to individual map reduce nodes.
+Each map task may emit key,valeu pairs to any partition. All values for the same key are always reduced together regardless of its originated mapper.
+
+Sort: Parfitioner sorts the set of intermed. keys merging the map o/p by key and sorting them by key value.
+This allows reducer to work on a continuous chunk of values for each key.
 
 Reduce - 
+For eahc key in the partition assigned to the Reducer, the Reducer's reduce() method is called once.
+The reduce() method receives a key as well as an iterator over all the values associated with the key. 
+The values associated with the key are reurned by the iterator in an undefined order.
+Reducer combines or aggregates the values together, returning a single output value as one of the final key, value pairs
 
 Output - 
+Hadoop's outputFormat class describes the o/p spec for a mapred job.
+It is resp. fpr validating the op spec of the job. ( check taht the o/p directory doesnt already exist).
+Provide the RecordWriter , which writes out the o/p files of the job.
+O/p files are stored in a file sys.
+
+Combiners -
+Combviners are intended as intermed. reducers associatesd with one map task.
+If a sum combiner is applied to each mapper o/p the sums of the duplicate keys will be computed before sent across the n/w to the reducer.
+This reduces the amt of traffic and make the shuffle and sort much faster.
+I/P and O/P data types for the combiner and reducer must be identical.
+Combiner outputs zero or more key, value pairs and is specified by reduce method which is caleed to perform this operation.
+Often the combiner and reducer are identical whic is possible if the operation is commutative and associative, but not always the case.
+
+Counters - 
+Counters are side channelt o mapRed process, but any worker can accumulate (associative addition) data to them.
+They allow you to provide application statistics or quality control without running additional jobs.
+Users can implement their own per job counters.
+All worker noes accumulate to counters (safe for multiprocess).
+Counters are often used for job stats to be presented on completion. Better than log messages for diagonizing pblms.
+Hadoop maintains bult in job counters - Total bytes of data read and write. Total num of records processed.
 
 
 
