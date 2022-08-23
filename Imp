@@ -78,6 +78,29 @@ _SUCCESS flag is dropped in the o/p hdfs directory.
 JT signals all TTs to remove the intermedciate data.
 Howwever, log files still persists (JT and tT logs).
 
+MapRed Data Flow:
+
+Input-> Split - 
+InputFormat class describes input spec for an MR job. Defines how data is split by the InputFormat. 
+Default FileInputFormat splits based on split length ( bytes)
+It is resp. for validating the i/p spec of the job. 
+Splitting up the i/p files into logical InputSplits ech of which will be assigne dto a mapper.
+Provide the RecordReader, which actually reads the rocrds in the i/p file and submits them as key/ value pairs to the mapper.
+
+Map - 
+Once i/p data has been split into InputSplits and assigned to mappers, the RecordReader submits the i/p as key,value pairs to the mappers.
+The mappers map() method performs the data analysis or other user defined work and emits the resulting key, value pairs to forward to the reducers.
+Individual mappers cant communicate with each other in any way and hence not aware of each other. They are solely governed by the local NodeManager.
+Each mapping task is equivalent and any mapper can process any i/p file.
+
+Shuffle & Sort -
+
+Reduce - 
+
+Output - 
+
+
+
 SPECULATIVE EXECUTION:-
 If a single map or red task runs significantly abt 20% slower than its peers by default, Hadoop tries to spin up the same task on another node.
 Whichever completes first is "winner". its op is used. Loser is terminated.
