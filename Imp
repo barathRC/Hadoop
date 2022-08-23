@@ -196,6 +196,9 @@ Single job - queue for multiple job submissions and standardised resource manage
 Improved availability and prevention of job failure (NN redundancy, isolation of resource mgmt, job mgmt and task mgmt.
 HDFS Federation for multiple namespace. Better isolation in a multi-user and multi-tenant env.
 
+hdfs dfs -put -get (more than one file)
+-getmerge (merge all files to a single file)
+
 
 
 
