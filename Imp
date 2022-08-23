@@ -101,3 +101,51 @@ Kerberos is a tickegting sys. Microsoft's LDAP is based on this. Control is by A
 HDFS Quota for new users and veteran users each separately. Lock down a hard limit of usable space and num of files and directories.
 Because these directly has a impact in the memory of NameNode. For every space and directory a 200 byte is reserved for the memory by the NameNode.
 To achieve use dfsadmin -[SetQuota|setSpaceQuota] or fs -count -q <directory>
+
+
+HADOOP 1:-
+Client apps submit jobs to JOB TRACKER.
+JT talks to the NameNode for location of the data.
+JT locates the TaskTracker nodes with available slots at or near the data.
+JT submits the work to the chosen TT nodes.
+The TT nodes are monitored. If they dont submit heart beats , they are deemed to have failed and the work is scheduled on a diff TT.
+A TT will notify the JT when a task fails. The JT may resubmit the job elsewhere, it may mark specific record as something to be avoided 
+and it may even blocklist the TT as unreliable.
+When the work is completed, the JT updates its status.
+Client apps can poll the jT for info.
+Single NameSpace for the entire cluster is managed by a single NameNode.
+
+
+Weaknesses -
+Tightly coupled to MR. MR only framework.
+NN not HA.
+JT is bottleneck.
+No support for multi-tenancy.
+
+HADOOP 2:-
+YARN supports multiple data processing models.
+All share the common resource mgmt service.
+Data does not needs to be shipped.
+GDFS Federation supports for multiple NameNodes/NameSpaces and horizontally scalability of name service
+Standby NameNode can be configured to automatically take over if the active NN fails.
+
+ADVANTAGES -
+Multi-tenancy: other computation frameworks can be run on the same Hadoop cluster simultaneously.
+Single job - queue for multiple job submissions and standardised resource management.
+Improved availability and prevention of job failure (NN redundancy, isolation of resource mgmt, job mgmt and task mgmt.
+HDFS Federation for multiple namespace. Better isolation in a multi-user and multi-tenant env.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
