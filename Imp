@@ -81,7 +81,7 @@ Howwever, log files still persists (JT and tT logs).
 MapRed Data Flow:
 
 Input-> Split - 
-InputFormat class describes input spec for an MR job. Defines how data is split by the InputFormat. 
+InputFormat class describes input spec for a MR job. Defines how data is split by the InputFormat. 
 Default FileInputFormat splits based on split length ( bytes)
 It is resp. for validating the i/p spec of the job. 
 Splitting up the i/p files into logical InputSplits ech of which will be assigne dto a mapper.
